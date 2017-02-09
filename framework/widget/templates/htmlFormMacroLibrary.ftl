@@ -360,9 +360,9 @@ NOTE: 2016-10-05: Widget early HTML encoding is now DISABLED for all HTML macros
     </tr>
   <@thead close=true open=false />
 </#macro>
-<#macro renderFormatHeaderRowCellOpen style positionSpan extraArgs...>
+<#macro renderFormatHeaderRowCellOpen style positionSpan inlineStyle="" extraArgs...>
   <#global renderFormatHeaderRowCellOpened = true>
-  <th<#if positionSpan?has_content && (positionSpan > 1)> colspan="${positionSpan}"</#if><#if style?has_content> class="${escapeVal(style, 'html')}"</#if>>
+  <th<#if positionSpan?has_content && (positionSpan > 1)> colspan="${positionSpan}"</#if><#if style?has_content> class="${escapeVal(style, 'html')}"</#if><#if inlineStyle?has_content> style="${escapeVal(inlineStyle, 'html')}"</#if>>
 </#macro>
 <#macro renderFormatHeaderRowCellClose extraArgs...>
   </th>
@@ -588,8 +588,13 @@ NOTE: 2016-10-05: Widget early HTML encoding is now DISABLED for all HTML macros
   <#local dummy = setRequestVar("htmlFormRenderFieldInfo", {})>
 </#macro>
 
-<#-- SCIPIO: only render empty space if not running within title open section -->
-<#macro renderFormatEmptySpace extraArgs...><#if (renderFormatFieldRowTitleCellOpened!false) != true>&nbsp;<#else><#global renderFieldTitleCurrentTitle = "&nbsp;"></#if></#macro>
+<#-- SCIPIO: only render empty space if not running within title open section 
+    2017-01-13: New role parameter (possible values: "", "field-title", ...) (DEV NOTE: acts as a surrogate to having to create a new macro for every purpose, like "renderEmptyFieldTitle") -->
+<#assign rfes_roleOutMap = {"field-title-single":""}><#-- "field-title-single":"&nbsp;", "field-title-list":"&nbsp;", "field-title":"&nbsp;", ... -->
+<#macro renderFormatEmptySpace role="" formType="" extraArgs...><#rt>
+    <#local outStr = rfes_roleOutMap[role+"-"+formType]!rfes_roleOutMap[role]!"&nbsp;"><#t>
+    <#if (renderFormatFieldRowTitleCellOpened!false) != true>${outStr}<#else><#global renderFieldTitleCurrentTitle = outStr></#if><#t>
+</#macro>
 
 <#macro renderTextFindField name value defaultOption opEquals opBeginsWith opContains opIsEmpty opNotEqual className alert size maxlength autocomplete titleStyle hideIgnoreCase ignCase ignoreCase title="" fieldType="" fieldTitleBlank=false hideOptions=false requiredField="" extraArgs...>
   <#-- delegate to scipio libs -->
@@ -784,6 +789,7 @@ Parameter: lastViewName, String, optional - If the ajaxEnabled parameter is true
 <#-- SCIPIO: new: renders a submit form after table, for list/multi forms -->
 <#macro renderSubmitForm hiddenFormName="" formName="" formType="" targetUrl="" targetWindow="" 
     params={} useRowSubmit=false useMasterSubmitField=false submitEntries=[] extraArgs...>
+  <#local params = toSimpleMap(params)>
   <#-- NOTE: if (useRowSubmit==false && useMasterSubmitField==true), we can basically skip this entire macro,
     but there's no harm going through this in case we need the hook -->
   <#--<#if !(!useRowSubmit && useMasterSubmitField)>-->
@@ -883,8 +889,8 @@ Parameter: lastViewName, String, optional - If the ajaxEnabled parameter is true
   <#if submitEntries?has_content && (useRowSubmit || !useMasterSubmitField)>
   <form method="post" action="${escapeFullUrl(targetUrl, 'html')}"<#if targetWindow?has_content> target="${escapeVal(targetWindow, 'html')}"</#if><#rt/>
     <#lt/> onsubmit="javascript:submitFormDisableSubmits(this);" name="${escapeVal(hiddenFormName, 'html')}">
-    <#list mapKeys(params) as paramName>
-      <input type="hidden" name="${escapeVal(paramName, 'html')}" value="${escapeVal(params[escapeVal(paramName, 'html')], 'html')}" />
+    <#list params?keys as paramName>
+      <input type="hidden" name="${escapeVal(paramName, 'html')}" value="${escapeVal(params[rawString(paramName)], 'html')}" />
     </#list>
     <#if useRowSubmit>
       <input type="hidden" name="_useRowSubmit" value="Y"/>

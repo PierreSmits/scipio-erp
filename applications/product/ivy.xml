@@ -21,7 +21,7 @@
 <ivy-module version="2.0"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
-    <info module="product" organisation="com.ilscipio.scipio-erp"/>
+    <info module="product" organisation="com.ilscipio.scipio.ce"/>
     <configurations>
         <!-- configurations for initial download/build -->
         <conf name="application" description="download all jars required for build"/>
@@ -30,6 +30,7 @@
         <!-- dependencies for initial/build downloads -->
         <!-- re init -->
         <dependency org="net.sf.dozer" name="dozer" rev="4.2.1" transitive="false" conf="application->default"/>
-        <!-- TODO: watermarker-0.0.4.jar -->
+        <!-- FIXME: Version missing from public repos
+        <dependency org="?" name="watermarker" rev="0.0.4" transitive="false" conf="application->default"/>-->
     </dependencies>
 </ivy-module>

@@ -79,9 +79,12 @@ under the License.
     <!-- Styles -->
     <VisualThemeResource visualThemeId="BASE" resourceTypeEnumId="VT_STYLESHEET" resourceValue="/base-theme/stylesheets/app.css" sequenceId="01"/>
     <VisualThemeResource visualThemeId="BASE" resourceTypeEnumId="VT_STYLESHEET" resourceValue="/base-theme/bower_components/foundation-datepicker/stylesheets/foundation-datepicker.css" sequenceId="02"/>
-    <VisualThemeResource visualThemeId="BASE" resourceTypeEnumId="VT_STYLESHEET" resourceValue="/base-theme/stylesheets/foundation-icons/foundation-icons.css" sequenceId="03"/>
+    <!-- Foundation icon font support (disabled for now) 
+    <VisualThemeResource visualThemeId="BASE" resourceTypeEnumId="VT_STYLESHEET" resourceValue="/base-theme/stylesheets/foundation-icons/foundation-icons.css" sequenceId="03"/>-->
+    <VisualThemeResource visualThemeId="BASE" resourceTypeEnumId="VT_STYLESHEET" resourceValue="/base-theme/bower_components/font-awesome/css/font-awesome.min.css" sequenceId="03"/>
     <VisualThemeResource visualThemeId="BASE" resourceTypeEnumId="VT_STYLESHEET" resourceValue="/base-theme/bower_components/gridster/dist/jquery.gridster.min.css" sequenceId="04"/>
     <VisualThemeResource visualThemeId="BASE" resourceTypeEnumId="VT_STYLESHEET" resourceValue="/base-theme/bower_components/datatables/datatables.min.css" sequenceId="05"/>
+    <VisualThemeResource visualThemeId="BASE" resourceTypeEnumId="VT_STYLESHEET" resourceValue="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700" sequenceId="06"/>
     
     <!-- Scripts -->
     <VisualThemeResource visualThemeId="BASE" resourceTypeEnumId="VT_FTPR_JAVASCRIPT" resourceValue="/base-theme/bower_components/modernizr/modernizr.js" sequenceId="02"/>

@@ -18,7 +18,7 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-<project name="OFBiz - Product Component" default="jar" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="OFBiz - Product Component" default="jar" basedir=".">
     <import file="../../common.xml"/>
 
     <!-- ================================================================== -->
@@ -72,8 +72,14 @@ under the License.
         <main-jar/>
         <test-jar/>
     </target>
-
-    <target name="init-jar-download" description="download initial jars">
-        <ivy:retrieve pattern="lib/[artifact]-[revision].[ext]" conf="application"/>
-    </target>
+    
+    <!-- SCIPIO: Libraries manually committed to repo, excluded from ivy (or emulated) file cleanout/removal
+        NOTE: This should be defined implicitly as an include (treated as exclude as needed) -->
+    <selector id="lib.update.manual.files">
+        <or>
+            <!-- FIXME: manually-committed JARs missing from public repos -->
+            <filename name="watermarker-*.jar"/>
+        </or>
+    </selector>
+    
 </project>

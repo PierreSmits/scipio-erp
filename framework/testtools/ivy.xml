@@ -21,7 +21,7 @@
 <ivy-module version="2.0"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
-    <info module="testtools" organisation="com.ilscipio.scipio-erp"/>
+    <info module="testtools" organisation="com.ilscipio.scipio.ce"/>
     <configurations>
         <!-- configurations for initial download/build -->
         <conf name="application" description="download all jars required for build"/>
@@ -29,8 +29,9 @@
     <dependencies>
         <!-- dependencies for initial/build downloads -->
         <!-- re init -->
+        <!-- SCIPIO: FIXME: these specific versions are not available in the maven repo
         <dependency org="org.springframework" name="spring-core" rev="4.2.3" transitive="false" conf="application->default"/>
         <dependency org="org.springframework" name="spring-test" rev="4.2.3" transitive="false" conf="application->default"/>
-        
+         -->
     </dependencies>
 </ivy-module>
